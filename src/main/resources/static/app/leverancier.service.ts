@@ -46,7 +46,6 @@ export class LeverancierService {
         return this.http
             .delete(url, { headers: headers })
             .toPromise()
-            .then(() => levArt)
             .catch(this.handleError);
     }
 

@@ -6,13 +6,16 @@ package be.provikmo.leveranciers.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import be.provikmo.leveranciers.model.Leverancier;
+import be.provikmo.leveranciers.services.api.LevArtService;
 import be.provikmo.leveranciers.services.api.LeverancierService;
 
 /**
@@ -25,6 +28,9 @@ public class LeverancierController {
 
 	@Autowired
 	private LeverancierService leveranciersService;
+	
+	@Autowired
+	private LevArtService levArtService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public @ResponseBody List<Leverancier> findAll() {
@@ -37,9 +43,9 @@ public class LeverancierController {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-	public @ResponseBody Leverancier saveLeverancier(@PathVariable Long id) {
-		System.out.println(id);
-		return null;
+	@ResponseStatus(value = HttpStatus.OK)
+	public void saveLeverancier(@PathVariable Long id) {
+		levArtService.deleteById(id);
 	}
 
 	@RequestMapping(value = "/test/{id}", method = RequestMethod.GET)
