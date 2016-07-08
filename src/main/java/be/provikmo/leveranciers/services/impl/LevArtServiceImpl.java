@@ -32,9 +32,6 @@ public class LevArtServiceImpl implements LevArtService{
 	
 	@Autowired
 	private LevArtRepository levArtRepository;
-	
-	@Autowired
-	private LeveranciersRepository leveranciersRepository;
 
 	@Override
 	public void deleteById(Long id) {
