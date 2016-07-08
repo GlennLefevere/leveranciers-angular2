@@ -4,6 +4,7 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Leverancier } from './leverancier';
+import {LevArt} from '.levart';
 
 
 @Injectable()
@@ -36,16 +37,16 @@ export class LeverancierService {
         return this.post(leverancier);
     }
 
-    removeArtikel(id: string, artikel: artikel) {
+    removeArtikel(id: string) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
         let url = `${this.leveranciersUrl}/${id}`;
 
         return this.http
-            .put(url, JSON.stringify(artikel), { headers: headers })
+            .delete(url, { headers: headers })
             .toPromise()
-            .then(() => artikel)
+            .then(() => levArt)
             .catch(this.handleError);
     }
 

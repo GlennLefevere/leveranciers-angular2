@@ -59,10 +59,10 @@
 	</div>
 	
 	<p-panel header="Title" [toggleable]="true" (onBeforeToggle)="toggle($event)" [collapsed]="collapsed" [style]="{'margin-top':'33px'}">
-		<p-dataTable [value]="text.artikels" expandableRows="true">
+		<p-dataTable [value]="text.levArts" expandableRows="true">
 			
-			<template let-artikel>
-				<p-dataTable [value]="artikel.leveranciers" >
+			<template let-levart>
+				<p-dataTable [value]="levart.artikel.leveranciers" >
 					<p-column field="naam" header="Naam"></p-column>
 					<p-column field="gemeente" header="Adres">
 						<template let-col let-lev="rowData">
@@ -88,9 +88,9 @@
 				</p-dataTable>
 	   		</template>
 	   		<p-column expander="true" [style]="{width:'33px'}"></p-column>
-			<p-column field="omschrijving" header="Omschrijving"></p-column>
+			<p-column field="artikel.omschrijving" header="Omschrijving"></p-column>
 			<p-column [style]="{width:'55px'}" styleClass="col-button">
-				<template let-art>
+				<template let-col let-art="rowData">
 					<button pButton type="button" (click)="deleteArtikel(art)" icon="fa fa-minus-circle"></button>
 				</template>
 			</p-column>

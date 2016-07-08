@@ -4,6 +4,7 @@
 package be.provikmo.leveranciers.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import be.provikmo.leveranciers.model.Leverancier;
-import be.provikmo.leveranciers.repositories.LeveranciersRepository;
+import be.provikmo.leveranciers.services.api.ArtikelService;
 
 /**
  * @author Glenn Lefevere
@@ -24,12 +25,12 @@ import be.provikmo.leveranciers.repositories.LeveranciersRepository;
 public class ArtikelController {
 
 	@Autowired
-	private LeveranciersRepository leveranciersService;
+	private ArtikelService artikelService;
 
 	@RequestMapping(path = "/levByArt/{artId}", method = RequestMethod.GET)
 	private @ResponseBody List<Leverancier> findLiveranciersByArtikelId(@PathVariable Long artId) {
-		// return leveranciersService.findByArtikelId(artId);
-		return null;
+		return artikelService.findByIdJoinLeveranciers(artId).getLevArts().stream().map(la -> la.getLeverancier())
+			.collect(Collectors.toList());
 	}
 
 }

@@ -7,13 +7,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import be.provikmo.leveranciers.model.Artikel;
 import be.provikmo.leveranciers.model.Leverancier;
 import be.provikmo.leveranciers.services.api.LeverancierService;
 
@@ -38,9 +36,9 @@ public class LeverancierController {
 		return leveranciersService.findByNaam(query.toUpperCase());
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-	public @ResponseBody Leverancier saveLeverancier(@PathVariable Long id, @RequestBody Artikel artikel) {
-
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+	public @ResponseBody Leverancier saveLeverancier(@PathVariable Long id) {
+		System.out.println(id);
 		return null;
 	}
 

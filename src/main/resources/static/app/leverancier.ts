@@ -1,7 +1,7 @@
 import {Land} from './land';
 import {Gemeente} from '.gemeente';
 import {Provincie} from '.provincie';
-import {Artikel} from '.artikel';
+import {LevArt} from '.levart';
 
 export class Leverancier {
     id: number;
@@ -17,5 +17,5 @@ export class Leverancier {
    	land: Land;
    	gemeente: Gemeente;
    	provincie: Provincie;
-    artikels: Artikel[];
+    levArts: LevArt[];
 }

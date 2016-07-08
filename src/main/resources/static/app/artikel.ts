@@ -1,7 +1,7 @@
-import {Leverancier} from '.leverancier';
+import {LevArt} from '.levart';
 
 export class Artikel {
     id: number;
     omschrijving: string;
-    leveranciers: Leverancier[];
+    levArts: LevArt[];
 }

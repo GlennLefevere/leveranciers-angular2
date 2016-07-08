@@ -5,6 +5,7 @@ import {ROUTER_DIRECTIVES} from '@angular/router';
 import { LeverancierService } from './leverancier.service';
 import { ArtikelService }        from './artikel.service';
 import {Leverancier} from '.leverancier';
+import {LevArt} from '.levart';
 
 import {AutoComplete} from 'primeng/primeng';
 import {DataTable} from 'primeng/primeng';
@@ -46,26 +47,21 @@ export class LeveranciersComponent {
     }
 
     toggle(event) {
-        //test: artikel[];
-        var test: any[] = [];
-
-        this.text.artikels.forEach(a => {
-            this.artikelService.getLeveranciersByArtikelId(a.id).then(lev => {
-                a.leveranciers = lev;
-                test.push(a);
+        this.text.levArts.forEach(la => {
+            this.artikelService.getLeveranciersByArtikelId(la.artikel.id).then(lev => {
+                la.artikel.leveranciers = lev;
             });
         });
-
-        this.text.artikels = test;
     }
 
-    deleteArtikel(art: Artikel) {
-        var idx = this.text.artikels.indexOf(art);
+    deleteArtikel(levArt: LevArt) {
+        var idx = this.text.levArts.indexOf(levArt);
+
         if (idx != -1) {
-            this.text.artikels = this.text.artikels.splice(idx, 1); // The second parameter is the number of elements to remove.
+            this.text.levArts.splice(idx, 1);
         }
 
-        this.leverancierService.removeArtikel(this.text.id, art);
+        this.leverancierService.removeArtikel(levArt.id);
     }
 
 }
