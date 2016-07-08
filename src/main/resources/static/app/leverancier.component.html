@@ -1,0 +1,99 @@
+<p-autoComplete [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)" [dropdown]="true" (onDropdownClick)="handleDropdown($event)" [minLength]="1" field="naam" (onSelect)="itemSelected()">
+</p-autoComplete>
+
+<div class="ui-grid ui-grid-responsive ui-grid-pad" style="margin-top:10px" *ngIf="selected">
+    <div class="ui-grid-row">
+		<div class="ui-grid-col-1">
+			<label>Naam: </label>
+		</div>
+		<div class="ui-grid-col-11">
+			{{text.naam}}
+		</div>
+	</div>
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-1">
+			<label>Adres: </label>
+		</div>
+		<div class="ui-grid-col-11">
+			{{text.straat}}
+		</div>
+	</div>
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-1">
+		</div>
+		<div class="ui-grid-col-11">
+			{{text.gemeente.postcode}} {{text.gemeente.gemeente}}
+		</div>
+	</div>
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-1">
+			<label>Telefoon: </label>
+		</div>
+		<div class="ui-grid-col-11">
+			<a href="tel:{{text.telefoon}}">{{text.telefoon}}</a>
+		</div>
+	</div>
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-1">
+			<label>Fax: </label>
+		</div>
+		<div class="ui-grid-col-11">
+			{{text.fax}}
+		</div>
+	</div>
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-1">
+			<label>E-mail: </label>
+		</div>
+		<div class="ui-grid-col-11">
+			<a href="mailto:{{text.email}}">{{text.email}}</a>
+		</div>
+	</div>
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-1">
+			<label>Site: </label>
+		</div>
+		<div class="ui-grid-col-11">
+			<a href="{{text.website}}">{{text.website}}</a>
+		</div>
+	</div>
+	
+	<p-panel header="Title" [toggleable]="true" (onBeforeToggle)="toggle($event)" [collapsed]="collapsed" [style]="{'margin-top':'33px'}">
+		<p-dataTable [value]="text.artikels" expandableRows="true">
+			
+			<template let-artikel>
+				<p-dataTable [value]="artikel.leveranciers" >
+					<p-column field="naam" header="Naam"></p-column>
+					<p-column field="gemeente" header="Adres">
+						<template let-col let-lev="rowData">
+							{{lev.gemeente.postcode}} {{lev.gemeente.gemeente}} {{lev.straat}}
+						</template>
+					</p-column>
+					<p-column field="telefoon" header="Telefoon">
+						<template let-col let-lev="rowData">
+							<a href="tel:{{lev.telefoon}}">{{lev.telefoon}}</a>
+						</template>
+					</p-column>
+					<p-column field="fax" header="Fax"></p-column>
+					<p-column field="email" header="E-mail">
+						<template let-col let-lev="rowData">
+							<a href="mailto:{{lev.email}}">{{lev.email}}</a>
+						</template>
+					</p-column>
+					<p-column field="naam" header="Naam">
+						<template let-col let-lev="rowData">
+							<a href="{{lev.website}}">{{lev.website}}</a>
+						</template>
+					</p-column>
+				</p-dataTable>
+	   		</template>
+	   		<p-column expander="true" [style]="{width:'33px'}"></p-column>
+			<p-column field="omschrijving" header="Omschrijving"></p-column>
+			<p-column [style]="{width:'55px'}" styleClass="col-button">
+				<template let-art>
+					<button pButton type="button" (click)="deleteArtikel(art)" icon="fa fa-minus-circle"></button>
+				</template>
+			</p-column>
+		</p-dataTable>
+	</p-panel>
+</div>
