@@ -1,5 +1,10 @@
+import {Provincie} from './provincie';
+import {Straat} from './straat';
+
 export class Gemeente {
     id: number;
+    naam: string;
     postcode: number;
-    gemeente: string;
+    provincie: Provincie;
+    straten: Straat[];
 }

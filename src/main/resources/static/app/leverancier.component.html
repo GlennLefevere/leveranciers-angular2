@@ -37,21 +37,21 @@
 			<label>Adres: </label>
 		</div>
 		<div class="ui-grid-col-11"  *ngIf="editValues == false">
-			{{leverancier.straat}}
+			{{leverancier.adres.straat}}
 		</div>
 		<div class="ui-grid-col-11"  *ngIf="editValues">
-			<input type="leverancier" pInputText [(ngModel)]="leverancier.straat"/>
+			<input type="leverancier" pInputText [(ngModel)]="leverancier.adres.straat"/>
 		</div>
 	</div>
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-1">
 		</div>
 		<div class="ui-grid-col-11" *ngIf="editValues == false">
-			{{leverancier.gemeente.postcode}} {{leverancier.gemeente.gemeente}}
+			{{leverancier.adres.postcode}} {{leverancier.adres.gemeenteNaam}}
 		</div>
 		<div class="ui-grid-col-11"  *ngIf="editValues">
-			<input type="leverancier" pInputText [(ngModel)]="leverancier.gemeente.postcode"/>
-			<input type="leverancier" pInputText [(ngModel)]="leverancier.gemeente.gemeente"/>
+			<input type="leverancier" pInputText [(ngModel)]="leverancier.adres.postcode" type="number"/>
+			<input type="leverancier" pInputText [(ngModel)]="leverancier.adres.gemeenteNaam"/>
 		</div>
 	</div>
 	<div class="ui-grid-row">
@@ -107,7 +107,7 @@
 					<p-column field="naam" header="Naam"></p-column>
 					<p-column field="gemeente" header="Adres">
 						<template let-col let-lev="rowData">
-							{{lev.gemeente.postcode}} {{lev.gemeente.gemeente}} {{lev.straat}}
+							{{lev.adres.postcode}} {{lev.adres.gemeenteNaam}} {{lev.adres.straat}}
 						</template>
 					</p-column>
 					<p-column field="telefoon" header="Telefoon">

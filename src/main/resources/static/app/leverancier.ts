@@ -1,7 +1,5 @@
-import {Land} from './land';
-import {Gemeente} from './gemeente';
-import {Provincie} from './provincie';
 import {LevArt} from './levart';
+import {Adres} from './adres';
 
 export class Leverancier {
     id: number;
@@ -14,8 +12,6 @@ export class Leverancier {
    	latitude: number;
    	longtitude: number;
    	webshop: boolean;
-   	land: Land;
-   	gemeente: Gemeente;
-   	provincie: Provincie;
+   	adres: Adres;
     levArts: LevArt[];
 }

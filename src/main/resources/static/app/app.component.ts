@@ -3,6 +3,7 @@ import { ROUTER_DIRECTIVES }  from '@angular/router';
 
 import { LeverancierService }        from './leverancier.service';
 import { ArtikelService }        from './artikel.service';
+import { AdresService } from './adres.service';
 
 @Component({
     selector: 'my-app',
@@ -20,7 +21,8 @@ import { ArtikelService }        from './artikel.service';
     directives: [ROUTER_DIRECTIVES],
     providers: [
         LeverancierService,
-        ArtikelService
+        ArtikelService,
+        AdresService
     ]
 })
 export class AppComponent {
