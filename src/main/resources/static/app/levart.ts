@@ -1,5 +1,5 @@
-import {Artikel} from '.artikel';
-import {Leverancier} from '.leverancier';
+import {Artikel} from './artikel';
+import {Leverancier} from './leverancier';
 
 export class LevArt {
     id: number;

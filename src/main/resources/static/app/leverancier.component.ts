@@ -4,26 +4,32 @@ import {ROUTER_DIRECTIVES} from '@angular/router';
 
 import { LeverancierService } from './leverancier.service';
 import { ArtikelService }        from './artikel.service';
-import {Leverancier} from '.leverancier';
-import {LevArt} from '.levart';
+import {Leverancier} from './leverancier';
+import {LevArt} from './levart';
+import {Artikel} from './artikel';
 
 import {AutoComplete} from 'primeng/primeng';
 import {DataTable} from 'primeng/primeng';
 import {Column} from 'primeng/primeng';
 import {Panel} from 'primeng/primeng';
 import {Button} from 'primeng/primeng';
+import {InputText} from 'primeng/primeng';
 
 @Component({
     selector: 'prov-leverancier',
     templateUrl: 'app/leverancier.component.html',
-    directives: [AutoComplete, DataTable, Column, Panel, Button]
+    directives: [AutoComplete, DataTable, Column, Panel, Button, InputText, ROUTER_DIRECTIVES]
 })
 
 export class LeveranciersComponent {
-    text: Leverancier;
+    leverancier: Leverancier;
     results: Leveranciers[];
     selected: boolean = false;
     collapsed: boolean = true;
+    selectedArtikel: Artikel;
+    resultArtikel: Artikel[];
+    artikelSelected: boolean = false;
+    editValues: boolean = false;
 
     constructor(
         private router: Router,
@@ -37,6 +43,11 @@ export class LeveranciersComponent {
             .then(leveranciers => this.results = leveranciers);
     }
 
+    searchArtikel(event) {
+        this.artikelService.getArtikelsByQuery(event.query)
+            .then(artikels => this.resultArtikel = artikels);
+    }
+
     handleDropdown(event) {
         this.leverancierService.getLeveranciersByQuery(event.query)
             .then(leveranciers => this.results = leveranciers);
@@ -47,18 +58,26 @@ export class LeveranciersComponent {
     }
 
     toggle(event) {
-        this.text.levArts.forEach(la => {
+        this.leverancier.levArts.forEach(la => {
             this.artikelService.getLeveranciersByArtikelId(la.artikel.id).then(lev => {
                 la.artikel.leveranciers = lev;
             });
         });
     }
 
+    toggleEdit() {
+        if (this.editValues) {
+            this.editValues = false;
+        } else {
+            this.editValues = true;
+        }
+    }
+
     deleteArtikel(levArt: LevArt) {
-        var idx = this.text.levArts.indexOf(levArt);
+        var idx = this.leverancier.levArts.indexOf(levArt);
 
         if (idx != -1) {
-            this.text.levArts.splice(idx, 1);
+            this.leverancier.levArts.splice(idx, 1);
         }
 
         this.leverancierService.removeArtikel(levArt.id);

@@ -82,4 +82,15 @@ public class ArtikelServiceImpl implements ArtikelService {
 	public Artikel save(Artikel artikel) {
 		return artikelRepository.save(artikel);
 	}
+
+	@Override
+	public List<Artikel> findByOmschrijving(String query) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Artikel> cq = cb.createQuery(Artikel.class).distinct(true);
+		Root<Artikel> root = cq.from(Artikel.class);
+		
+		cq.where(cb.like(cb.upper(root.get(Artikel_.omschrijving)), "%" + query + "%"));
+		
+		return em.createQuery(cq).getResultList();
+	}
 }

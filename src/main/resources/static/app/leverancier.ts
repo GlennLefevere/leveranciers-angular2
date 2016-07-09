@@ -1,7 +1,7 @@
 import {Land} from './land';
-import {Gemeente} from '.gemeente';
-import {Provincie} from '.provincie';
-import {LevArt} from '.levart';
+import {Gemeente} from './gemeente';
+import {Provincie} from './provincie';
+import {LevArt} from './levart';
 
 export class Leverancier {
     id: number;

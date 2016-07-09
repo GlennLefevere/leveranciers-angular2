@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import be.provikmo.leveranciers.model.Artikel;
 import be.provikmo.leveranciers.model.Leverancier;
 import be.provikmo.leveranciers.services.api.ArtikelService;
 
@@ -31,6 +32,12 @@ public class ArtikelController {
 	private @ResponseBody List<Leverancier> findLiveranciersByArtikelId(@PathVariable Long artId) {
 		return artikelService.findByIdJoinLeveranciers(artId).getLevArts().stream().map(la -> la.getLeverancier())
 			.collect(Collectors.toList());
+	}
+	
+
+	@RequestMapping(value = "/{query}", method = RequestMethod.GET)
+	public @ResponseBody List<Artikel> findByQuery(@PathVariable String query) {
+		return artikelService.findByOmschrijving(query.toUpperCase());
 	}
 
 }

@@ -1,65 +1,106 @@
-<p-autoComplete [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)" [dropdown]="true" (onDropdownClick)="handleDropdown($event)" [minLength]="1" field="naam" (onSelect)="itemSelected()">
-</p-autoComplete>
+<div class="ui-grid ui-grid-responsive ui-grid-pad" style="margin-top:10px">
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-4">
+			<p-autoComplete [(ngModel)]="leverancier" [suggestions]="results" (completeMethod)="search($event)" [dropdown]="true" (onDropdownClick)="handleDropdown($event)" [minLength]="1" field="naam" (onSelect)="itemSelected()">
+			</p-autoComplete>
+		</div>
+		<div class="ui-grid-col-2">
+			<a [routerLink]="['/leveranciers/new']" routerLinkActive="active">
+				<span class="fa fa-plus-circle"></span>
+			</a>
+		</div>
+	</div>
+</div>
 
 <div class="ui-grid ui-grid-responsive ui-grid-pad" style="margin-top:10px" *ngIf="selected">
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-1">
+			<button type="button" (click)="toggleEdit()" pButton label="Edit" [disabled]="editValues"></button>
+		</div>
+		<div class="ui-grid-col-2">
+			<button type="button" (click)="toggleEdit()" pButton label="Save" [disabled]="editValues == false"></button>
+		</div>
+	</div>
     <div class="ui-grid-row">
 		<div class="ui-grid-col-1">
 			<label>Naam: </label>
 		</div>
-		<div class="ui-grid-col-11">
-			{{text.naam}}
+		<div class="ui-grid-col-11"  *ngIf="editValues == false">
+			{{leverancier.naam}}
+		</div>
+		<div class="ui-grid-col-11"  *ngIf="editValues">
+			<input type="leverancier" pInputText [(ngModel)]="leverancier.naam"/>
 		</div>
 	</div>
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-1">
 			<label>Adres: </label>
 		</div>
-		<div class="ui-grid-col-11">
-			{{text.straat}}
+		<div class="ui-grid-col-11"  *ngIf="editValues == false">
+			{{leverancier.straat}}
+		</div>
+		<div class="ui-grid-col-11"  *ngIf="editValues">
+			<input type="leverancier" pInputText [(ngModel)]="leverancier.straat"/>
 		</div>
 	</div>
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-1">
 		</div>
-		<div class="ui-grid-col-11">
-			{{text.gemeente.postcode}} {{text.gemeente.gemeente}}
+		<div class="ui-grid-col-11" *ngIf="editValues == false">
+			{{leverancier.gemeente.postcode}} {{leverancier.gemeente.gemeente}}
+		</div>
+		<div class="ui-grid-col-11"  *ngIf="editValues">
+			<input type="leverancier" pInputText [(ngModel)]="leverancier.gemeente.postcode"/>
+			<input type="leverancier" pInputText [(ngModel)]="leverancier.gemeente.gemeente"/>
 		</div>
 	</div>
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-1">
 			<label>Telefoon: </label>
 		</div>
-		<div class="ui-grid-col-11">
-			<a href="tel:{{text.telefoon}}">{{text.telefoon}}</a>
+		<div class="ui-grid-col-11" *ngIf="editValues == false">
+			<a href="tel:{{leverancier.telefoon}}">{{leverancier.telefoon}}</a>
+		</div>
+		<div class="ui-grid-col-11"  *ngIf="editValues">
+			<input type="leverancier" pInputText [(ngModel)]="leverancier.telefoon"/>
 		</div>
 	</div>
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-1">
 			<label>Fax: </label>
 		</div>
-		<div class="ui-grid-col-11">
-			{{text.fax}}
+		<div class="ui-grid-col-11" *ngIf="editValues == false">
+			{{leverancier.fax}}
+		</div>
+		<div class="ui-grid-col-11"  *ngIf="editValues">
+			<input type="leverancier" pInputText [(ngModel)]="leverancier.fax"/>
 		</div>
 	</div>
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-1">
 			<label>E-mail: </label>
 		</div>
-		<div class="ui-grid-col-11">
-			<a href="mailto:{{text.email}}">{{text.email}}</a>
+		<div class="ui-grid-col-11" *ngIf="editValues == false">
+			<a href="mailto:{{leverancier.email}}">{{leverancier.email}}</a>
+		</div>
+		<div class="ui-grid-col-11"  *ngIf="editValues">
+			<input type="leverancier" pInputText [(ngModel)]="leverancier.email"/>
 		</div>
 	</div>
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-1">
 			<label>Site: </label>
 		</div>
-		<div class="ui-grid-col-11">
-			<a href="{{text.website}}">{{text.website}}</a>
+		<div class="ui-grid-col-11" *ngIf="editValues == false">
+			<a href="{{leverancier.website}}">{{leverancier.website}}</a>
+		</div>
+		<div class="ui-grid-col-11"  *ngIf="editValues">
+			<input type="leverancier" pInputText [(ngModel)]="leverancier.website"/>
 		</div>
 	</div>
 	
 	<p-panel header="Title" [toggleable]="true" (onBeforeToggle)="toggle($event)" [collapsed]="collapsed" [style]="{'margin-top':'33px'}">
-		<p-dataTable [value]="text.levArts" expandableRows="true">
+		<p-dataTable [value]="leverancier.levArts" expandableRows="true">
 			
 			<template let-levart>
 				<p-dataTable [value]="levart.artikel.leveranciers" >

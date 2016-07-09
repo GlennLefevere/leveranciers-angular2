@@ -4,7 +4,7 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Leverancier } from './leverancier';
-import {LevArt} from '.levart';
+import {LevArt} from './levart';
 
 
 @Injectable()
@@ -80,7 +80,6 @@ export class LeverancierService {
         return this.http
             .post(this.leveranciersUrl, JSON.stringify(leverancier), { headers: headers })
             .toPromise()
-            .then(res => res.json())
             .catch(this.handleError);
     }
 }

@@ -33,6 +33,16 @@ export class ArtikelService {
     }
 
 
+    getArtikelsByQuery(query: string): Promise<Artikel[]> {
+        let url = `${this.artikelsUrl}/${query}`;
+
+        return this.http.get(url)
+            .toPromise()
+            .then(this.extractData)
+            .catch(this.handleError);
+    }
+
+
     private handleError(error: any) {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);

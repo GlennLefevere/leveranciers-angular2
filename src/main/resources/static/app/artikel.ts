@@ -1,4 +1,4 @@
-import {LevArt} from '.levart';
+import {LevArt} from './levart';
 
 export class Artikel {
     id: number;
