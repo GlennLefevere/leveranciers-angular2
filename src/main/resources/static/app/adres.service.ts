@@ -7,10 +7,10 @@ import {Land} from './land';
 
 @Injectable()
 export class AdresService {
-	private adresUrl = '/api/adres/';  // URL to web api
+    private adresUrl = '/api/adres';  // URL to web api
 
     constructor(private http: Http) { }
-    
+
     getLanden(): Promise<Land[]> {
         return this.http.get(this.leveranciersUrl)
             .toPromise()

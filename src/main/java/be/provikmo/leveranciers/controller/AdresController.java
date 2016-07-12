@@ -18,9 +18,14 @@ public class AdresController {
 
 	@Autowired
 	private LandService landService;
-	
+
 	@RequestMapping(value = "/{query}", method = RequestMethod.GET)
-	private @ResponseBody List<Land> findByQuery(@PathVariable String query){
-		return null;
+	public @ResponseBody List<Land> findByQuery(@PathVariable String query) {
+		return landService.findByQuery(query.toUpperCase());
+	}
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public @ResponseBody List<Land> findAll() {
+		return landService.findAll();
 	}
 }

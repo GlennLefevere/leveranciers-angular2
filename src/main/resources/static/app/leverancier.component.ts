@@ -30,6 +30,7 @@ export class LeveranciersComponent {
     resultArtikel: Artikel[];
     artikelSelected: boolean = false;
     editValues: boolean = false;
+    addArtikels: boolean = false;
 
     constructor(
         private router: Router,
@@ -53,16 +54,25 @@ export class LeveranciersComponent {
             .then(leveranciers => this.results = leveranciers);
     }
 
+    handleArtikelDropdown(event) {
+        this.artikelService.getArtikelsByQuery(event.query)
+            .then(artikels => this.resultArtikel = artikels);
+    }
+
     itemSelected() {
         this.selected = true;
     }
 
+    artikelsSelected() {
+        let id = this.leverancier.id;
+
+        this.leverancierService.addArtikel(id, this.selectedArtikel);
+
+        this.getAllLevarts();
+    }
+
     toggle(event) {
-        this.leverancier.levArts.forEach(la => {
-            this.artikelService.getLeveranciersByArtikelId(la.artikel.id).then(lev => {
-                la.artikel.leveranciers = lev;
-            });
-        });
+        this.loadArtikelLevs();
     }
 
     toggleEdit() {
@@ -73,6 +83,10 @@ export class LeveranciersComponent {
         }
     }
 
+    toggleAddArtikels() {
+        this.addArtikels = true;
+    }
+
     deleteArtikel(levArt: LevArt) {
         var idx = this.leverancier.levArts.indexOf(levArt);
 
@@ -81,6 +95,18 @@ export class LeveranciersComponent {
         }
 
         this.leverancierService.removeArtikel(levArt.id);
+    }
+
+    private getAllLevarts() {
+        this.leverancierService.findAllLevArt(this.leverancier.id).then(la => this.leverancier.levArts = la);
+    }
+
+    private loadArtikelLevs() {
+        this.leverancier.levArts.forEach(la => {
+            this.artikelService.getLeveranciersByArtikelId(la.artikel.id).then(lev => {
+                la.artikel.levArts = lev;
+            });
+        });
     }
 
 }

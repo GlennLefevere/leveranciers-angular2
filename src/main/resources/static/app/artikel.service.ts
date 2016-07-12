@@ -10,8 +10,8 @@ import { Leverancier } from './leverancier';
 @Injectable()
 export class ArtikelService {
 
-    private artikelsUrl = '/api/artikels/';
-    private levartUrl = '/api/artikels/levByArt/';
+    private artikelsUrl = '/api/artikels';
+    private levartUrl = '/api/artikels/levByArt';
 
     constructor(private http: Http) { }
 

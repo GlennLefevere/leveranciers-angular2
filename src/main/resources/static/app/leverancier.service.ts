@@ -5,12 +5,13 @@ import 'rxjs/add/operator/toPromise';
 
 import { Leverancier } from './leverancier';
 import {LevArt} from './levart';
+import {Artikel} from './artikel';
 
 
 @Injectable()
 export class LeverancierService {
 
-    private leveranciersUrl = '/api/leveranciers/';  // URL to web api
+    private leveranciersUrl = '/api/leveranciers';  // URL to web api
 
     constructor(private http: Http) { }
 
@@ -46,6 +47,28 @@ export class LeverancierService {
         return this.http
             .delete(url, { headers: headers })
             .toPromise()
+            .catch(this.handleError);
+    }
+
+    addArtikel(id: string, artikel: Artikel) {
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        let url = `${this.leveranciersUrl}/${id}`;
+
+        return this.http
+            .post(url, JSON.stringify(artikel), { headers: headers })
+            .toPromise()
+            .catch(this.handleError);
+    }
+
+    findAllLevArt(id: string): Promise<LevArt> {
+        let url = `${this.leveranciersUrl}/levarts/${id}`;
+
+        return this.http.get(url)
+            .toPromise()
+            .then(this.extractData)
             .catch(this.handleError);
     }
 

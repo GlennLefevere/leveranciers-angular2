@@ -26,8 +26,21 @@ import {InputMask} from 'primeng/primeng';
 
 export class NewLeveranciersComponent implements OnInit {
     @Input() newLeverancier: Leverancier;
+
     land: Land;
     resultLanden: Land[];
+    noLandSelected: boolean = true;
+
+    provincie: Provincie;
+    resultProvincies: Provincie[];
+    noProvincieSelected: boolean = true;
+
+    gemeente: Gemeente;
+    resultGemeentes: Gemeente[];
+    noGemeenteSelected: boolean = true;
+
+    straat: Straat;
+    resultStraten: Straat[];
 
     constructor(
         private leverancierService: LeverancierService,
@@ -42,18 +55,44 @@ export class NewLeveranciersComponent implements OnInit {
 
     save() {
         this.leverancierService.save(this.newLeverancier);
+        window.history.back();
     }
-    
-    searchLand(event){
-    	this.adresService.getLandenByQuery(event.query).then(landen => this.resultLanden = landen);
+
+    searchLand(event) {
+        this.adresService.getLandenByQuery(event.query).then(landen => this.resultLanden = landen);
     }
-    
-    handleLandDropdown(event){
-    	this.adresService.getLandenByQuery(event.query).then(landen => this.resultLanden = landen);
+
+    landSelectedMethod() {
+        this.noLandSelected = false;
+        this.newLeverancier.adres.landNaam = this.land.naam;
     }
-    
-    landSelected(){
-    	
+
+    searchProvincie(event) {
+        this.resultProvincies = this.land.provincies.filter(p => { if (p.naam.toUpperCase().indexOf(event.query.toUpperCase()) >= 0) return p });
     }
+
+    provincieSelectedMethod() {
+        this.noProvincieSelected = false;
+        this.newLeverancier.adres.provincieNaam = this.provincie.naam;
+    }
+
+    searchGemeente(event) {
+        this.resultGemeentes = this.provincie.gemeentes.filter(g => { if (g.naam.toUpperCase().indexOf(event.query.toUpperCase()) >= 0) return g });
+    }
+
+    gemeenteSelectedMethod() {
+        this.noGemeenteSelected = false;
+        this.newLeverancier.adres.gemeenteNaam = this.gemeente.naam;
+        this.newLeverancier.adres.postcode = this.gemeente.postcode;
+    }
+
+   	searchStraat(event) {
+        this.resultStraten = this.gemeente.straten.filter(s => { if (s.naam.toUpperCase().indexOf(event.query.toUpperCase()) >= 0) return s });
+    }
+
+    straatSelectedMethod() {
+        this.newLeverancier.adres.straat = this.straat.naam;
+    }
+
 
 }

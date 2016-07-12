@@ -29,15 +29,20 @@ public class ArtikelController {
 	private ArtikelService artikelService;
 
 	@RequestMapping(path = "/levByArt/{artId}", method = RequestMethod.GET)
-	private @ResponseBody List<Leverancier> findLiveranciersByArtikelId(@PathVariable Long artId) {
+	public @ResponseBody List<Leverancier> findLiveranciersByArtikelId(@PathVariable Long artId) {
 		return artikelService.findByIdJoinLeveranciers(artId).getLevArts().stream().map(la -> la.getLeverancier())
 			.collect(Collectors.toList());
+
 	}
-	
 
 	@RequestMapping(value = "/{query}", method = RequestMethod.GET)
 	public @ResponseBody List<Artikel> findByQuery(@PathVariable String query) {
 		return artikelService.findByOmschrijving(query.toUpperCase());
+	}
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public @ResponseBody List<Artikel> findAll() {
+		return artikelService.findAll();
 	}
 
 }
