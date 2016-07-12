@@ -4,7 +4,6 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Leverancier } from './leverancier';
-import {LevArt} from './levart';
 import {Artikel} from './artikel';
 
 
@@ -60,15 +59,6 @@ export class LeverancierService {
         return this.http
             .post(url, JSON.stringify(artikel), { headers: headers })
             .toPromise()
-            .catch(this.handleError);
-    }
-
-    findAllLevArt(id: string): Promise<LevArt> {
-        let url = `${this.leveranciersUrl}/levarts/${id}`;
-
-        return this.http.get(url)
-            .toPromise()
-            .then(this.extractData)
             .catch(this.handleError);
     }
 

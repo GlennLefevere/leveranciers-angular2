@@ -4,6 +4,7 @@
 package be.provikmo.leveranciers.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,14 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import be.provikmo.leveranciers.model.Artikel;
 import be.provikmo.leveranciers.model.LevArt;
 import be.provikmo.leveranciers.model.Leverancier;
+import be.provikmo.leveranciers.model.rest.LeverancierRest;
 import be.provikmo.leveranciers.services.api.LevArtService;
 import be.provikmo.leveranciers.services.api.LeverancierService;
+import be.provikmo.leveranciers.utils.EntityToRestUtil;
 
 /**
  * @author Glenn Lefevere
@@ -39,15 +39,17 @@ public class LeverancierController {
 	private LevArtService levArtService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public @ResponseBody List<Leverancier> findAll() {
-		Gson gson = new GsonBuilder().create();
-
-		return leveranciersService.findAll();
+	public @ResponseBody List<LeverancierRest> findAll() {
+		return leveranciersService.findAll().stream()
+			.map(l -> EntityToRestUtil.leverancierToLeverancierRest(l))
+			.collect(Collectors.toList());
 	}
 
 	@RequestMapping(value = "/{query}", method = RequestMethod.GET)
-	public @ResponseBody List<Leverancier> findByQuery(@PathVariable String query) {
-		return leveranciersService.findByNaam(query.toUpperCase());
+	public @ResponseBody List<LeverancierRest> findByQuery(@PathVariable String query) {
+		return leveranciersService.findByNaam(query.toUpperCase()).stream()
+			.map(l -> EntityToRestUtil.leverancierToLeverancierRest(l))
+			.collect(Collectors.toList());
 	}
 
 	@RequestMapping(value = "/levarts/{id}", method = RequestMethod.GET)
@@ -78,4 +80,10 @@ public class LeverancierController {
 		leveranciersService.addArtikelToLeverancier(id, artikel);
 	}
 
+	@RequestMapping(value = "/testing", method = RequestMethod.GET)
+	public @ResponseBody List<LeverancierRest> findTest() {
+		return leveranciersService.findAll().stream()
+			.map(l -> EntityToRestUtil.leverancierToLeverancierRest(l))
+			.collect(Collectors.toList());
+	}
 }

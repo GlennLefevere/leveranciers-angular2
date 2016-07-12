@@ -5,7 +5,6 @@ import {ROUTER_DIRECTIVES} from '@angular/router';
 import { LeverancierService } from './leverancier.service';
 import { ArtikelService }        from './artikel.service';
 import {Leverancier} from './leverancier';
-import {LevArt} from './levart';
 import {Artikel} from './artikel';
 
 import {AutoComplete} from 'primeng/primeng';
@@ -67,8 +66,6 @@ export class LeveranciersComponent {
         let id = this.leverancier.id;
 
         this.leverancierService.addArtikel(id, this.selectedArtikel);
-
-        this.getAllLevarts();
     }
 
     toggle(event) {
@@ -87,24 +84,10 @@ export class LeveranciersComponent {
         this.addArtikels = true;
     }
 
-    deleteArtikel(levArt: LevArt) {
-        var idx = this.leverancier.levArts.indexOf(levArt);
-
-        if (idx != -1) {
-            this.leverancier.levArts.splice(idx, 1);
-        }
-
-        this.leverancierService.removeArtikel(levArt.id);
-    }
-
-    private getAllLevarts() {
-        this.leverancierService.findAllLevArt(this.leverancier.id).then(la => this.leverancier.levArts = la);
-    }
-
     private loadArtikelLevs() {
-        this.leverancier.levArts.forEach(la => {
-            this.artikelService.getLeveranciersByArtikelId(la.artikel.id).then(lev => {
-                la.artikel.levArts = lev;
+        this.leverancier.artikels.forEach(a => {
+            this.artikelService.getLeveranciersByArtikelId(a.id).then(lev => {
+                a.leveranciers = lev;
             });
         });
     }

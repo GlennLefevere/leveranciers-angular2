@@ -1,5 +1,5 @@
-import {LevArt} from './levart';
 import {Adres} from './adres';
+import {Artikel} from './artikel';
 
 export class Leverancier {
     id: number;
@@ -13,5 +13,5 @@ export class Leverancier {
    	longtitude: number;
    	webshop: boolean;
    	adres: Adres;
-    levArts: LevArt[];
+   	artikels: Artikel[];
 }

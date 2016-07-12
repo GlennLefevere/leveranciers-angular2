@@ -4,7 +4,6 @@
 package be.provikmo.leveranciers.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import be.provikmo.leveranciers.model.Artikel;
 import be.provikmo.leveranciers.model.Leverancier;
 import be.provikmo.leveranciers.services.api.ArtikelService;
+import be.provikmo.leveranciers.utils.EntityToRestUtil;
 
 /**
  * @author Glenn Lefevere
@@ -30,9 +30,7 @@ public class ArtikelController {
 
 	@RequestMapping(path = "/levByArt/{artId}", method = RequestMethod.GET)
 	public @ResponseBody List<Leverancier> findLiveranciersByArtikelId(@PathVariable Long artId) {
-		return artikelService.findByIdJoinLeveranciers(artId).getLevArts().stream().map(la -> la.getLeverancier())
-			.collect(Collectors.toList());
-
+		return EntityToRestUtil.artikelToArtikelRest(artikelService.findByIdJoinLeveranciers(artId)).getLeveranciers();
 	}
 
 	@RequestMapping(value = "/{query}", method = RequestMethod.GET)

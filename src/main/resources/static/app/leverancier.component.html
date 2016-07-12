@@ -112,10 +112,10 @@
 			</div>
 		</div>
 	
-		<p-dataTable [value]="leverancier.levArts" expandableRows="true">
+		<p-dataTable [value]="leverancier.artikels" expandableRows="true">
 			
-			<template let-levart>
-				<p-dataTable [value]="levart.artikel.levArts" >
+			<template let-artikel>
+				<p-dataTable [value]="artikel.leveranciers" >
 					<p-column field="naam" header="Naam"></p-column>
 					<p-column field="gemeente" header="Adres">
 						<template let-col let-lev="rowData">
@@ -141,7 +141,7 @@
 				</p-dataTable>
 	   		</template>
 	   		<p-column expander="true" [style]="{width:'33px'}"></p-column>
-			<p-column field="artikel.omschrijving" header="Omschrijving"></p-column>
+			<p-column field="omschrijving" header="Omschrijving"></p-column>
 			<p-column [style]="{width:'55px'}" styleClass="col-button">
 				<template let-col let-art="rowData">
 					<button pButton type="button" (click)="deleteArtikel(art)" icon="fa fa-minus-circle"></button>
