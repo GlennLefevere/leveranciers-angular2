@@ -55,13 +55,13 @@ public class DummyCLR implements CommandLineRunner {
 		straat.setNaam("Zeebruggelaan");
 
 		gemeente.addStraat(straat);
-		
+
 		provincie.addGemeente(gemeente);
-		
+
 		land.addProvincie(provincie);
-		
+
 		landService.save(land);
-		
+
 		Artikel artikel = new Artikel();
 		artikel.setOmschrijving("Laarzen");
 
@@ -79,22 +79,20 @@ public class DummyCLR implements CommandLineRunner {
 		leverancier.setEmail("glenn@email.be");
 		leverancier.setWebsite("www.glenn.be");
 		leverancier.setWebshop(true);
-		
+
 		Adres adres = new Adres();
 		adres.setLandNaam("België");
 		adres.setProvincieNaam("West-vlaanderen");
 		adres.setGemeenteNaam("Blankenberge");
 		adres.setPostcode(8370);
 		adres.setStraat("Zeebruggelaan");
-		
+
 		leverancier.setAdres(adres);
-		
+
 		Leverancier l = leveranciersService.save(leverancier);
 
 		artikelService.findAllJoinLeveranciers().forEach(a -> l.addArtikel(a));
 
-		// Leverancier result =
-		leveranciersService.save(leverancier);
-
+		leveranciersService.save(l);
 	}
 }

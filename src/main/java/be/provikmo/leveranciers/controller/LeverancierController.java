@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import be.provikmo.leveranciers.model.Artikel;
-import be.provikmo.leveranciers.model.LevArt;
 import be.provikmo.leveranciers.model.Leverancier;
 import be.provikmo.leveranciers.model.rest.LeverancierRest;
-import be.provikmo.leveranciers.services.api.LevArtService;
 import be.provikmo.leveranciers.services.api.LeverancierService;
 import be.provikmo.leveranciers.utils.EntityToRestUtil;
 
@@ -34,9 +32,6 @@ public class LeverancierController {
 
 	@Autowired
 	private LeverancierService leveranciersService;
-
-	@Autowired
-	private LevArtService levArtService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public @ResponseBody List<LeverancierRest> findAll() {
@@ -52,20 +47,9 @@ public class LeverancierController {
 			.collect(Collectors.toList());
 	}
 
-	@RequestMapping(value = "/levarts/{id}", method = RequestMethod.GET)
-	public @ResponseBody List<LevArt> findLevartByLevId(@PathVariable Long id) {
-		return leveranciersService.findByIdJoinArtikel(id).getLevArts();
-	}
-
-	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-	@ResponseStatus(value = HttpStatus.OK)
-	public void saveLeverancier(@PathVariable Long id) {
-		levArtService.deleteById(id);
-	}
-
 	@RequestMapping(value = "/test/{id}", method = RequestMethod.GET)
-	public @ResponseBody Leverancier findAllJoinArtikels(@PathVariable Long id) {
-		return leveranciersService.findByIdJoinArtikel(id);
+	public @ResponseBody LeverancierRest findAllJoinArtikels(@PathVariable Long id) {
+		return EntityToRestUtil.leverancierToLeverancierRest(leveranciersService.findByIdJoinArtikel(id));
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/")
