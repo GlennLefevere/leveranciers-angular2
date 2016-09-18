@@ -1,0 +1,77 @@
+/**
+ * PLUNKER VERSION (based on systemjs.config.js in angular.io)
+ * System configuration for Angular 2 samples
+ * Adjust as necessary for your application needs.
+ */
+(function(global) {
+
+  var ngVer = '@2.0.0'; // lock in the angular package version; do not let it float to current!
+  var routerVer = '@3.0.0'; // lock router version
+  var formsVer = '@2.0.0'; // lock forms version
+  var routerDeprecatedVer = '@2.0.0'; // temporarily until we update all the guides
+
+  //map tells the System loader where to look for things
+  var  map = {
+    'app':                        'app',
+
+    '@angular':                   'https://unpkg.com/@angular', // sufficient if we didn't pin the version
+    '@angular/router':            'https://unpkg.com/@angular/router' + routerVer,
+    '@angular/forms':             'https://unpkg.com/@angular/forms' + formsVer,
+    '@angular/router-deprecated': 'https://unpkg.com/@angular/router-deprecated' + routerDeprecatedVer,
+    'primeng':                    'https://unpkg.com/primeng@1.0.0-beta.15/',
+    //'angular2-in-memory-web-api': 'https://unpkg.com/angular2-in-memory-web-api', 
+    // get latest
+    'rxjs':                       'https://unpkg.com/rxjs@5.0.0-beta.6',
+    'ts':                         'https://unpkg.com/plugin-typescript@4.0.10/lib/plugin.js',
+    'typescript':                 'https://unpkg.com/typescript@1.9.0-dev.20160409/lib/typescript.js',
+    'material-design-lite':		  'https://unpkg.com/material-design-lite@1.2.1'
+ };
+
+  //packages tells the System loader how to load when no filename and/or no extension
+  var packages = {
+    'app':                        { main: 'main.ts',  defaultExtension: 'ts' },
+    'rxjs':                       { defaultExtension: 'js' },
+    'primeng':                    { defaultExtension: 'js' },
+    '@angular/router-deprecated': { main: '/bundles/router-deprecated' + '.umd.js', defaultExtension: 'js' },
+    '@angular/forms':			  { main: 'index.js', defaultExtension: 'js' },
+    '@angular/router':			  { main: 'index.js', defaultExtension: 'js' },
+    //'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
+    'material-design-lite': {defaultExtension: 'js', main: 'material.min.js'}
+  };
+
+  var ngPackageNames = [
+    'common',
+    'compiler',
+    'core',
+    'http',
+    'platform-browser',
+    'platform-browser-dynamic',
+    'upgrade',
+  ];
+
+  // Add map entries for each angular package
+  // only because we're pinning the version with `ngVer`.
+  ngPackageNames.forEach(function(pkgName) {
+    map['@angular/'+pkgName] = 'https://unpkg.com/@angular/' + pkgName + ngVer;
+    packages['@angular/'+pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
+  });
+
+  var config = {
+    transpiler: 'ts',
+    typescriptOptions: {
+      tsconfig: true
+    },
+    meta: {
+      'typescript': {
+        "exports": "ts"
+      }
+    },
+    map: map,
+    packages: packages
+  };
+  
+  if (global.filterSystemConfig) { global.filterSystemConfig(confiég); }
+
+  System.config(config);
+
+})(this);
