@@ -34,21 +34,17 @@ public class LeverancierController {
 	private LeverancierService leveranciersService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public @ResponseBody List<LeverancierRest> findAll() {
-		return leveranciersService.findAll().stream()
-			.map(l -> EntityToRestUtil.leverancierToLeverancierRest(l))
-			.collect(Collectors.toList());
+	public @ResponseBody List<Leverancier> findAll() {
+		return leveranciersService.findAll();
 	}
 
 	@RequestMapping(value = "/{query}", method = RequestMethod.GET)
-	public @ResponseBody List<LeverancierRest> findByQuery(@PathVariable String query) {
-		return leveranciersService.findByNaam(query.toUpperCase()).stream()
-			.map(l -> EntityToRestUtil.leverancierToLeverancierRest(l))
-			.collect(Collectors.toList());
+	public @ResponseBody List<Leverancier> findByQuery(@PathVariable String query) {
+		return leveranciersService.findByNaam(query.toUpperCase());
 	}
 
 	@RequestMapping(value = "/test/{id}", method = RequestMethod.GET)
-	public @ResponseBody LeverancierRest findAllJoinArtikels(@PathVariable Long id) {
+	public @ResponseBody LeverancierRest findAllJoinArtikels(@PathVariable String id) {
 		return EntityToRestUtil.leverancierToLeverancierRest(leveranciersService.findByIdJoinArtikel(id));
 	}
 
@@ -60,7 +56,7 @@ public class LeverancierController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/{id}")
 	@ResponseStatus(value = HttpStatus.OK)
-	public void addNewArtikel(@PathVariable Long id, @RequestBody Artikel artikel) {
+	public void addNewArtikel(@PathVariable String id, @RequestBody Artikel artikel) {
 		leveranciersService.addArtikelToLeverancier(id, artikel);
 	}
 

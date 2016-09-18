@@ -63,15 +63,34 @@
 			<artifactId>leveranciers-model</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>be.provikmo.adres</groupId>
-			<artifactId>adres-model</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>be.provikmo.adres</groupId> -->
+<!-- 			<artifactId>adres-model</artifactId> -->
+<!-- 			<version>0.0.1-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.neo4j</groupId>
 			<artifactId>neo4j-cypher-compiler-2.2</artifactId>
 			<version>2.2.5</version>
+		</dependency>
+
+<!-- 		<dependency> -->
+<!-- 		    <groupId>com.hynnet</groupId> -->
+<!-- 		    <artifactId>oracle-driver-ojdbc</artifactId> -->
+<!-- 		    <version>12.1.0.2</version> -->
+<!-- 		</dependency> -->
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>
+        		spring-boot-starter-cloud-connectors
+        	</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-core</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 

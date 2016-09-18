@@ -12,26 +12,31 @@
 			<label>Land: </label>
 		</div>
 		<div class="ui-grid-col-2">
-			<p-autoComplete [(ngModel)]="land" [suggestions]="resultLanden" (completeMethod)="searchLand($event)" [minLength]="1" field="naam" (onSelect)="landSelectedMethod()">
-			</p-autoComplete>		
+			<input type="leverancier" pInputText [(ngModel)]="newLeverancier.land.naam"/>	
 		</div>
 	</div>
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-1">
 			<label>Provincie: </label>
 		</div>
-		<div class="ui-grid-col-2">		
-			<p-autoComplete [(ngModel)]="provincie" [disabled]="noLandSelected" [suggestions]="resultProvincies" (completeMethod)="searchProvincie($event)" [minLength]="1" field="naam" (onSelect)="provincieSelectedMethod()">
-			</p-autoComplete>
+		<div class="ui-grid-col-2">	
+			<input type="leverancier" pInputText [(ngModel)]="newLeverancier.provincie.naam"/>	
 		</div>
 	</div>
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-1">
 			<label>Gemeente: </label>
 		</div>
-		<div class="ui-grid-col-2">		
-			<p-autoComplete [(ngModel)]="gemeente" [disabled]="noProvincieSelected" [suggestions]="resultGemeentes" (completeMethod)="searchGemeente($event)" [minLength]="1" field="naam" (onSelect)="gemeenteSelectedMethod()">
-			</p-autoComplete>
+		<div class="ui-grid-col-2">
+			<input type="leverancier" pInputText [(ngModel)]="newLeverancier.gemeente.gemeente"/>	
+		</div>
+	</div>
+	<div class="ui-grid-row">
+		<div class="ui-grid-col-1">
+			<label>Gemeente: </label>
+		</div>
+		<div class="ui-grid-col-2">
+			<input type="leverancier" pInputText [(ngModel)]="newLeverancier.gemeente.postcode"/>	
 		</div>
 	</div>
 	<div class="ui-grid-row">
@@ -39,8 +44,7 @@
 			<label>Straat: </label>
 		</div>
 		<div class="ui-grid-col-2">		
-			<p-autoComplete [(ngModel)]="straat" [disabled]="noGemeenteSelected" [suggestions]="resultStraten" (completeMethod)="searchStraat($event)" [minLength]="1" field="naam" (onSelect)="straatSelectedMethod()">
-			</p-autoComplete>		
+			<input type="leverancier" pInputText [(ngModel)]="newLeverancier.straat"/>	
 		</div>
 	</div>
 	<div class="ui-grid-row">

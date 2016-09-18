@@ -1,8 +1,10 @@
-import {Adres} from './adres';
 import {Artikel} from './artikel';
+import {Land} from './land';
+import {Gemeente} from './gemeente';
+import {Provincie} from './provincie';
 
 export class Leverancier {
-    id: number;
+    id: string;
     naam: string;
     straat: string;
     telefoon: string;
@@ -12,6 +14,9 @@ export class Leverancier {
    	latitude: number;
    	longtitude: number;
    	webshop: boolean;
-   	adres: Adres;
    	artikels: Artikel[];
+
+   	land: Land;
+   	gemeente: Gemeente;
+   	provincie: Provincie;
 }

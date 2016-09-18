@@ -1,12 +1,12 @@
 <div class="ui-grid ui-grid-responsive ui-grid-pad" style="margin-top:10px">
-	<div class="ui-grid-row">
-		<div class="ui-grid-col-4">
+	<div>
+		<div style="float: left;">
 			<p-autoComplete [(ngModel)]="leverancier" [suggestions]="results" (completeMethod)="search($event)" [dropdown]="true" (onDropdownClick)="handleDropdown($event)" [minLength]="1" field="naam" (onSelect)="itemSelected()">
 			</p-autoComplete>
 		</div>
-		<div class="ui-grid-col-2">
-			<a [routerLink]="['/leveranciers/new']" routerLinkActive="active">
-				<span class="fa fa-plus-circle"></span>
+		<div style="float: left; margin-left: 50px;">
+			<a [routerLink]="['/leveranciers/new']" [routerLinkActive]="['active']" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored small-button">
+				  <i class="material-icons">add</i>
 			</a>
 		</div>
 	</div>
@@ -37,21 +37,21 @@
 			<label>Adres: </label>
 		</div>
 		<div class="ui-grid-col-11"  *ngIf="editValues == false">
-			{{leverancier.adres.straat}}
+			{{leverancier.straat}}
 		</div>
 		<div class="ui-grid-col-11"  *ngIf="editValues">
-			<input type="leverancier" pInputText [(ngModel)]="leverancier.adres.straat"/>
+			<input type="leverancier" pInputText [(ngModel)]="leverancier.straat"/>
 		</div>
 	</div>
 	<div class="ui-grid-row">
 		<div class="ui-grid-col-1">
 		</div>
 		<div class="ui-grid-col-11" *ngIf="editValues == false">
-			{{leverancier.adres.postcode}} {{leverancier.adres.gemeenteNaam}}
+			{{leverancier.gemeente.postcode}} {{leverancier.gemeente.gemeente}}
 		</div>
 		<div class="ui-grid-col-11"  *ngIf="editValues">
-			<input type="leverancier" pInputText [(ngModel)]="leverancier.adres.postcode" type="number"/>
-			<input type="leverancier" pInputText [(ngModel)]="leverancier.adres.gemeenteNaam"/>
+			<input type="leverancier" pInputText [(ngModel)]="leverancier.gemeente.postcode" type="number"/>
+			<input type="leverancier" pInputText [(ngModel)]="leverancier.gemeente.gemeente"/>
 		</div>
 	</div>
 	<div class="ui-grid-row">
@@ -99,7 +99,7 @@
 		</div>
 	</div>
 	
-	<p-panel header="Title" [toggleable]="true" (onBeforeToggle)="toggle($event)" [collapsed]="collapsed" [style]="{'margin-top':'33px'}">
+	<p-panel header="Title" [toggleable]="true" (onBeforeToggle)="toggle($event)" [collapsed]="true" [style]="{'margin-top':'33px'}">
 		<div class="ui-grid ui-grid-responsive ui-grid-pad" style="margin-top:10px" *ngIf="selected">
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-1">
@@ -118,32 +118,39 @@
 				<p-dataTable [value]="artikel.leveranciers" >
 					<p-column field="naam" header="Naam"></p-column>
 					<p-column field="gemeente" header="Adres">
-						<template let-col let-lev="rowData">
-							{{lev.adres.postcode}} {{lev.adres.gemeenteNaam}} {{lev.adres.straat}}
+						<template let-col let-lev="rowData" pTemplate type="body">
+							{{lev.gemeente.postcode}} {{lev.gemeente.gemeente}} {{lev.straat}}
 						</template>
 					</p-column>
 					<p-column field="telefoon" header="Telefoon">
-						<template let-col let-lev="rowData">
+						<template let-col let-lev="rowData" pTemplate type="body">
 							<a href="tel:{{lev.telefoon}}">{{lev.telefoon}}</a>
 						</template>
 					</p-column>
 					<p-column field="fax" header="Fax"></p-column>
 					<p-column field="email" header="E-mail">
-						<template let-col let-lev="rowData">
+						<template let-col let-lev="rowData" pTemplate type="body">
 							<a href="mailto:{{lev.email}}">{{lev.email}}</a>
 						</template>
 					</p-column>
 					<p-column field="naam" header="Naam">
-						<template let-col let-lev="rowData">
+						<template let-col let-lev="rowData" pTemplate type="body">
 							<a href="{{lev.website}}">{{lev.website}}</a>
 						</template>
 					</p-column>
 				</p-dataTable>
 	   		</template>
 	   		<p-column expander="true" [style]="{width:'33px'}"></p-column>
-			<p-column field="omschrijving" header="Omschrijving"></p-column>
+			<p-column field="omschrijving" header="Omschrijving">
+				<template let-col let-art="rowData" pTemplate type="body">
+					<translation [key]="art[col.field]">
+					</translation>
+<!-- 					<span>{{art}}</span> -->
+<!-- 					<span>{{col}}</span> -->
+				</template>
+			</p-column>
 			<p-column [style]="{width:'55px'}" styleClass="col-button">
-				<template let-col let-art="rowData">
+				<template let-col let-art="rowData" pTemplate type="body">
 					<button pButton type="button" (click)="deleteArtikel(art)" icon="fa fa-minus-circle"></button>
 				</template>
 			</p-column>

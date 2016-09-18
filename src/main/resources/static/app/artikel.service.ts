@@ -12,16 +12,20 @@ export class ArtikelService {
 
     private artikelsUrl = '/api/artikels';
     private levartUrl = '/api/artikels/levByArt';
+    private artlevartUrl = '/api/artikels/artByLev'
 
     constructor(private http: Http) { }
 
     getArtikels(): Promise<Artikel[]> {
-        return this.http.get(this.artikelsUrl)
+        let url = `${this.artikelsUrl}/`;
+
+        console.log(url);
+
+        return this.http.get(url)
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
     }
-
 
     getLeveranciersByArtikelId(id: number): Promise<Leverancier[]> {
         let url = `${this.levartUrl}/${id}`;
@@ -32,7 +36,6 @@ export class ArtikelService {
             .catch(this.handleError);
     }
 
-
     getArtikelsByQuery(query: string): Promise<Artikel[]> {
         let url = `${this.artikelsUrl}/${query}`;
 
@@ -42,6 +45,14 @@ export class ArtikelService {
             .catch(this.handleError);
     }
 
+    getArtikelsByLevId(id: string): Promise<Artikel[]> {
+        let url = `${this.artlevartUrl}/${id}`;
+
+        return this.http.get(url)
+            .toPromise()
+            .then(this.extractData)
+            .catch(this.handleError);
+    }
 
     private handleError(error: any) {
         console.error('An error occurred', error);
@@ -52,4 +63,5 @@ export class ArtikelService {
         let body = res.json();
         return body || {};
     }
+
 }

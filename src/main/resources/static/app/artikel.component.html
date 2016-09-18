@@ -1,0 +1,123 @@
+<p-dataTable [value]="artikels" expandableRows="true" [(selection)]="selectedArtikels" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+	
+	<template let-artikel>
+		
+		<p-dataTable [value]="artikel.leveranciers" expandableRows="true" [(selection)]="selectedLeveranciers">
+		
+			<template let-lev>
+				
+				<p-dataTable [value]="lev.artikels">
+		
+					<p-column field="omschrijving" header="Omschrijving">
+				
+						<template let-col let-art="rowData" pTemplate type="body">
+				
+							<translation [key]="art[col.field]">
+							</translation>
+				
+						</template>
+				
+					</p-column>
+				
+					<p-column [style]="{width:'55px'}" styleClass="col-button">
+				
+						<template let-col let-art="rowData" pTemplate type="body">
+				
+							<button pButton type="button" (click)="deleteArtikel(art)" icon="fa fa-minus-circle"></button>
+				
+						</template>
+				
+					</p-column>
+				
+				</p-dataTable>
+			
+			</template>
+		
+			<p-column expander="true" [style]="{width:'33px'}"></p-column>
+			
+			<p-column field="naam" header="Naam"></p-column>
+			
+			<p-column field="gemeente" header="Adres">
+				
+				<template let-col let-lev="rowData" pTemplate type="body">
+					
+					{{lev.gemeente.postcode}} {{lev.gemeente.gemeente}} {{lev.straat}}
+				
+				</template>
+			
+			</p-column>
+			
+			<p-column field="telefoon" header="Telefoon">
+				
+				<template let-col let-lev="rowData" pTemplate type="body">
+					
+					<a href="tel:{{lev.telefoon}}">{{lev.telefoon}}</a>
+				
+				</template>
+			
+			</p-column>
+			
+			<p-column field="fax" header="Fax"></p-column>
+				
+			<p-column field="email" header="E-mail">
+				
+				<template let-col let-lev="rowData" pTemplate type="body">
+					
+					<a href="mailto:{{lev.email}}">{{lev.email}}</a>
+				
+				</template>
+			
+			</p-column>
+			
+			<p-column field="naam" header="Naam">
+				
+				<template let-col let-lev="rowData" pTemplate type="body">
+				
+					<a href="{{lev.website}}">{{lev.website}}</a>
+
+				</template>
+
+			</p-column>
+			
+			<p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+			
+<!-- 			<p-column> -->
+				
+<!-- 				<template let-col let-lev="rowData"> -->
+				
+<!-- 					<p-checkbox name="levs" [value]="lev.id" [(ngModel)]="selectedLeveranciers" (onChange)="changeLevBox()"></p-checkbox> -->
+				
+<!-- 				</template> -->
+				
+<!-- 			</p-column> -->
+		
+		</p-dataTable>
+	
+	</template>
+
+	<p-column expander="true" [style]="{width:'33px'}"></p-column>
+
+	<p-column field="omschrijving" header="Omschrijving">
+
+		<template let-col let-art="rowData" pTemplate type="body">
+
+			<translation [key]="art[col.field]">
+			</translation>
+
+		</template>
+
+	</p-column>
+	
+	<p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+
+<!-- 	<p-column [style]="{width:'55px'}" styleClass="col-button"> -->
+
+<!-- 		<template let-col let-art="rowData"> -->
+
+<!-- 			<p-checkbox name="groupname" [value]="art" [(ngModel)]="selectedArtikels" (onChange)="checkboxChanged(art)"></p-checkbox> -->
+
+<!-- 		</template> -->
+
+<!-- 	</p-column> -->
+
+</p-dataTable>

@@ -8,6 +8,8 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "platformDirectives": [ "@angular/common#COMMON_DIRECTIVES" ], 
+    "platformPipes": [ "@angular/common#COMMON_PIPES" ]
   }
 }

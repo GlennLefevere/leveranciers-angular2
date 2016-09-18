@@ -1,7 +1,4 @@
-import {Provincie} from './provincie';
-
 export class Land {
-    id: number;
+    id: string;
     naam: string;
-    provincies: Provincie[];
 }

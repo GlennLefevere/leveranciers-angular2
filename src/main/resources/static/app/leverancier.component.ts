@@ -7,22 +7,24 @@ import { ArtikelService }        from './artikel.service';
 import {Leverancier} from './leverancier';
 import {Artikel} from './artikel';
 
-import {AutoComplete} from 'primeng/primeng';
-import {DataTable} from 'primeng/primeng';
-import {Column} from 'primeng/primeng';
-import {Panel} from 'primeng/primeng';
-import {Button} from 'primeng/primeng';
-import {InputText} from 'primeng/primeng';
+import {TranslationComponent} from './translation.component';
+
+//import {AutoComplete} from 'primeng/primeng';
+//import {DataTable} from 'primeng/primeng';
+//import {Column} from 'primeng/primeng';
+//import {Panel} from 'primeng/primeng';
+//import {Button} from 'primeng/primeng';
+//import {InputText} from 'primeng/primeng';
 
 @Component({
     selector: 'prov-leverancier',
-    templateUrl: 'app/leverancier.component.html',
-    directives: [AutoComplete, DataTable, Column, Panel, Button, InputText, ROUTER_DIRECTIVES]
+    templateUrl: 'app/leverancier.component.html'//,
+    //directives: [AutoComplete, DataTable, Column, Panel, Button, InputText, ROUTER_DIRECTIVES, TranslationComponent]
 })
 
 export class LeveranciersComponent {
     leverancier: Leverancier;
-    results: Leveranciers[];
+    results: Leverancier[];
     selected: boolean = false;
     collapsed: boolean = true;
     selectedArtikel: Artikel;
@@ -85,9 +87,15 @@ export class LeveranciersComponent {
     }
 
     private loadArtikelLevs() {
-        this.leverancier.artikels.forEach(a => {
-            this.artikelService.getLeveranciersByArtikelId(a.id).then(lev => {
-                a.leveranciers = lev;
+        this.artikelService.getArtikelsByLevId(this.leverancier.id).then(artikels => {
+            this.leverancier.artikels = artikels;
+
+            console.log(artikels);
+
+            this.leverancier.artikels.forEach(a => {
+                this.artikelService.getLeveranciersByArtikelId(a.id).then(lev => {
+                    a.leveranciers = lev;
+                });
             });
         });
     }

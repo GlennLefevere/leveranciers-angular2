@@ -1,15 +1,16 @@
-import { provideRouter, RouterConfig }  from '@angular/router';
+import { ModuleWithProviders }  from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
 import { IndexComponent } from './index.component';
 import { LeveranciersComponent } from './leverancier.component';
 import { ArtikelComponent } from './artikel.component';
 import { NewLeveranciersComponent } from './createleverancier.component';
 
-export const routes: RouterConfig = [
+const appRoutes: Routes = [
     {
         path: '',
         redirectTo: '/index',
-        terminal: true
+        pathMatch: 'full'
     },
     {
         path: 'index',
@@ -29,6 +30,4 @@ export const routes: RouterConfig = [
     }
 ];
 
-export const APP_ROUTER_PROVIDERS = [
-    provideRouter(routes)
-];
+export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

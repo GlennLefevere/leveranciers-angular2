@@ -3,21 +3,25 @@
  */
 package be.provikmo.leveranciers.clr;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import be.provikmo.leveranciers.adres.model.Gemeente;
-import be.provikmo.leveranciers.adres.model.Land;
-import be.provikmo.leveranciers.adres.model.Provincie;
-import be.provikmo.leveranciers.adres.model.Straat;
-import be.provikmo.leveranciers.adres.services.api.LandService;
-import be.provikmo.leveranciers.model.Adres;
 import be.provikmo.leveranciers.model.Artikel;
+import be.provikmo.leveranciers.model.Gemeente;
+import be.provikmo.leveranciers.model.Land;
 import be.provikmo.leveranciers.model.Leverancier;
+import be.provikmo.leveranciers.model.Provincie;
+import be.provikmo.leveranciers.model.Translation;
 import be.provikmo.leveranciers.repositories.ArtikelRepository;
 import be.provikmo.leveranciers.services.api.ArtikelService;
+import be.provikmo.leveranciers.services.api.GemeenteService;
+import be.provikmo.leveranciers.services.api.LandService;
 import be.provikmo.leveranciers.services.api.LeverancierService;
+import be.provikmo.leveranciers.services.api.ProvincieService;
+import be.provikmo.leveranciers.services.api.TranslationService;
 
 /**
  * @author Glenn Lefevere
@@ -36,7 +40,16 @@ public class DummyCLR implements CommandLineRunner {
 	private ArtikelRepository artikelRepository;
 
 	@Autowired
+	private GemeenteService gemeenteService;
+
+	@Autowired
 	private LandService landService;
+
+	@Autowired
+	private ProvincieService provincieService;
+
+	@Autowired
+	private TranslationService translationService;
 
 	/** {@inheritDoc} */
 	@Override
@@ -44,29 +57,24 @@ public class DummyCLR implements CommandLineRunner {
 		Land land = new Land();
 		land.setNaam("België");
 
+		landService.saveOrUpdate(land);
+
 		Provincie provincie = new Provincie();
 		provincie.setNaam("West-Vlaanderen");
 
+		provincieService.saveOrUpdate(provincie);
+
 		Gemeente gemeente = new Gemeente();
-		gemeente.setPostcode(8370);
-		gemeente.setNaam("Blankenberge");
+		gemeente.setPostcode(8370L);
+		gemeente.setGemeente("Blankenberge");
 
-		Straat straat = new Straat();
-		straat.setNaam("Zeebruggelaan");
-
-		gemeente.addStraat(straat);
-
-		provincie.addGemeente(gemeente);
-
-		land.addProvincie(provincie);
-
-		landService.save(land);
+		gemeenteService.saveOrUpdate(gemeente);
 
 		Artikel artikel = new Artikel();
-		artikel.setOmschrijving("Laarzen");
+		artikel.setOmschrijving("ART_LAARZEN_KEY");
 
 		Artikel artikel2 = new Artikel();
-		artikel2.setOmschrijving("Brand werende jas");
+		artikel2.setOmschrijving("ART_JAS_KEY");
 
 		artikelRepository.save(artikel);
 		artikelRepository.save(artikel2);
@@ -79,20 +87,30 @@ public class DummyCLR implements CommandLineRunner {
 		leverancier.setEmail("glenn@email.be");
 		leverancier.setWebsite("www.glenn.be");
 		leverancier.setWebshop(true);
+		leverancier.setLand(land);
+		leverancier.setGemeente(gemeente);
+		leverancier.setProvincie(provincie);
 
-		Adres adres = new Adres();
-		adres.setLandNaam("België");
-		adres.setProvincieNaam("West-vlaanderen");
-		adres.setGemeenteNaam("Blankenberge");
-		adres.setPostcode(8370);
-		adres.setStraat("Zeebruggelaan");
+		Translation translation1 = new Translation();
+		translation1.setLocale("nl_BE");
+		translation1.setTekst("Laarzen");
+		translation1.setWaarde("ART_LAARZEN_KEY");
 
-		leverancier.setAdres(adres);
+		Translation translation2 = new Translation();
+		translation2.setLocale("nl_BE");
+		translation2.setTekst("Brand werende jas");
+		translation2.setWaarde("ART_JAS_KEY");
 
-		Leverancier l = leveranciersService.save(leverancier);
+		translationService.saveTransLation(translation1);
+		translationService.saveTransLation(translation2);
 
-		artikelService.findAllJoinLeveranciers().forEach(a -> l.addArtikel(a));
+		Leverancier result = leveranciersService.save(leverancier);
 
-		leveranciersService.save(l);
+		List<Artikel> artikels = artikelService.findAllJoinLeveranciers();
+
+		artikels.forEach(a -> leveranciersService.addArtikelToLeverancier(result.getId(), a));
+
+		System.out.println(leveranciersService.findAll().size());
+
 	}
 }

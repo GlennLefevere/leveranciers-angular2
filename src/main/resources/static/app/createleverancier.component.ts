@@ -13,15 +13,15 @@ import {Provincie} from './provincie';
 import {Gemeente} from './gemeente';
 import {Straat} from './straat';
 
-import {AutoComplete} from 'primeng/primeng';
-import {Button} from 'primeng/primeng';
-import {InputText} from 'primeng/primeng';
-import {InputMask} from 'primeng/primeng';
+//import {AutoComplete} from 'primeng/primeng';
+//import {Button} from 'primeng/primeng';
+//import {InputText} from 'primeng/primeng';
+//import {InputMask} from 'primeng/primeng';
 
 @Component({
     selector: 'prov-create-leverancier',
-    templateUrl: 'app/createleverancier.component.html',
-    directives: [Button, InputText, InputMask, AutoComplete]
+    templateUrl: 'app/createleverancier.component.html'//,
+    //directives: [Button, InputText, InputMask, AutoComplete]
 })
 
 export class NewLeveranciersComponent implements OnInit {
@@ -50,7 +50,9 @@ export class NewLeveranciersComponent implements OnInit {
 
     ngOnInit() {
         this.newLeverancier = new Leverancier();
-        this.newLeverancier.adres = new Adres();
+        this.newLeverancier.gemeente = new Gemeente();
+        this.newLeverancier.land = new Land();
+        this.newLeverancier.provincie = new Provincie();
     }
 
     save() {

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import be.provikmo.leveranciers.model.Artikel;
 import be.provikmo.leveranciers.model.Leverancier;
 import be.provikmo.leveranciers.services.api.ArtikelService;
-import be.provikmo.leveranciers.utils.EntityToRestUtil;
+import be.provikmo.leveranciers.services.api.LeverancierService;
 
 /**
  * @author Glenn Lefevere
@@ -28,9 +28,12 @@ public class ArtikelController {
 	@Autowired
 	private ArtikelService artikelService;
 
+	@Autowired
+	private LeverancierService leverancierService;
+
 	@RequestMapping(path = "/levByArt/{artId}", method = RequestMethod.GET)
-	public @ResponseBody List<Leverancier> findLiveranciersByArtikelId(@PathVariable Long artId) {
-		return EntityToRestUtil.artikelToArtikelRest(artikelService.findByIdJoinLeveranciers(artId)).getLeveranciers();
+	public @ResponseBody List<Leverancier> findLiveranciersByArtikelId(@PathVariable String artId) {
+		return artikelService.findByIdJoinLeveranciers(artId).getLeveranciers();
 	}
 
 	@RequestMapping(value = "/{query}", method = RequestMethod.GET)
@@ -41,6 +44,11 @@ public class ArtikelController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public @ResponseBody List<Artikel> findAll() {
 		return artikelService.findAll();
+	}
+
+	@RequestMapping(path = "/artByLev/{id}", method = RequestMethod.GET)
+	public @ResponseBody List<Artikel> findByLeverancierId(@PathVariable String id) {
+		return leverancierService.findByIdJoinArtikel(id).getArtikels();
 	}
 
 }
